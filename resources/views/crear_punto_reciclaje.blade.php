@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{{route('home')}}">HOME</a>
     <div>
         <h1>Agrega Punto de Reciclaje</h1>
         <form action="{{route('crear_punto')}}" method="GET">

@@ -8,11 +8,17 @@
 </head>
 <body>
     <a href="{{route('home')}}">HOME</a>
-    <h1>Listado de Puntos</h1>
+    <h1>Listado de Relaciones</h1>
     <ul>
-        @foreach ($puntos as $p)
+        @foreach ($relacion as $r)
         <li>
-            <a href="{{route('editar_punto_vista',$p->id)}}">{{$p->id}} {{$p->tipo}} {{$p->director}} {{$p->hora_apertura}} {{$p->hora_cierre}}</a>
+            @foreach ($r->recolector as $recolector)
+                <span>{{$recolector->nombre}} - </span>
+            @endforeach
+
+            @foreach ($r->punto as $punto)
+                <span>{{$punto->tipo}}</span>
+            @endforeach 
         </li>
         @endforeach
     </ul>

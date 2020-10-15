@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PuntoReciclaje;
+use App\Recolectores;
+use App\DetalleRecolecto;
 
 class ReciclajeController extends Controller
 {
@@ -47,5 +49,106 @@ class ReciclajeController extends Controller
         $punto->save();
         return redirect()->route('lista_punto_vista');
     }
+    
+    public function crearRecolectorVista(Request $request)
+    {
+        return view('crear_recolectores');
+    }
 
+    public function crearRecolector(Request $request)
+    {
+        $dias = "";
+        $recolector = new Recolectores();
+        
+        $recolector->nombre = $request->nombre;
+        if ($request->lunes == "on") {
+            $dias .= "lunes,";   
+        }
+        if ($request->martes == "on") {
+            $dias .= "martes,";   
+        }
+        if ($request->miercoles == "on") {
+            $dias .= "miercoles,";   
+        }
+        if ($request->jueves == "on") {
+            $dias .= "jueves,";   
+        }
+        if ($request->viernes == "on") {
+            $dias .= "viernes,";   
+        }
+        if ($request->sabado == "on") {
+            $dias .= "sabado,";   
+        }
+        if ($request->domingo == "on") {
+            $dias .= "domingo,";   
+        }
+
+        $recolector->dias_recoleccion = $dias;
+        $recolector->save();
+        return back()->withInput();
+    }
+
+    public function listarRecolectorVista(Request $request)
+    {
+        $recolectores = Recolectores::all();
+        return view('enlistado_recolectores')->with("recolector",$recolectores);
+    }
+
+    public function editarRecolectorVista(Request $request,$id)
+    {
+        if ($id) {
+            $recolector= Recolectores::where("id",$id)->first();
+            $puntos = PuntoReciclaje::all();
+            return view('edicion_recolectores')->with('recolectores',$recolector)->with('puntos',$puntos);
+        }
+    }
+
+    public function editarRecolector(Request $request)
+    {
+        $dias = "";
+        $recolector= Recolectores::where("id",$request->id)->first();
+        $recolector->nombre = $request->nombre;
+
+        if ($request->lunes == "on") {
+            $dias .= "lunes,";   
+        }
+        if ($request->martes == "on") {
+            $dias .= "martes,";   
+        }
+        if ($request->miercoles == "on") {
+            $dias .= "miercoles,";   
+        }
+        if ($request->jueves == "on") {
+            $dias .= "jueves,";   
+        }
+        if ($request->viernes == "on") {
+            $dias .= "viernes,";   
+        }
+        if ($request->sabado == "on") {
+            $dias .= "sabado,";   
+        }
+        if ($request->domingo == "on") {
+            $dias .= "domingo,";   
+        }
+        $recolector->dias_recoleccion = $dias;
+
+        $recolector->save();
+        return redirect()->route('lista_recolector_vista');
+    }
+    
+    public function creaRelacion(Request $request)
+    {
+        $relacion = new DetalleRecolecto();
+        $relacion->id_punto_reciclaje = $request->punto_reciclaje;
+        $relacion->id_recolectores = $request->id;
+        $relacion->save();
+        return redirect()->route('lista_recolector_vista');
+    }
+
+    public function listaRelaciones(Request $request)
+    {
+        $relacion = DetalleRecolecto::with(['recolector','punto'])->get();
+        
+        return view('lista_relaciones')->with('relacion',$relacion);
+    }
 }

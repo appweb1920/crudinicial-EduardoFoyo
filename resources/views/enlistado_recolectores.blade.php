@@ -8,11 +8,11 @@
 </head>
 <body>
     <a href="{{route('home')}}">HOME</a>
-    <h1>Listado de Puntos</h1>
+    <h1>Listado de Recolectores</h1>
     <ul>
-        @foreach ($puntos as $p)
+        @foreach ($recolector as $p)
         <li>
-            <a href="{{route('editar_punto_vista',$p->id)}}">{{$p->id}} {{$p->tipo}} {{$p->director}} {{$p->hora_apertura}} {{$p->hora_cierre}}</a>
+            <a href="{{route('editar_recolector_vista',$p->id)}}">{{$p->nombre}} {{$p->director}} {{$p->dias_recoleccion}} {{$p->hora_cierre}}</a>
         </li>
         @endforeach
     </ul>

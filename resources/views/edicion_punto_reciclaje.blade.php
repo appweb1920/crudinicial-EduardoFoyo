@@ -7,8 +7,9 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{{route('home')}}">HOME</a>
     <div>
-        <h1>Agrega Punto de Reciclaje</h1>
+        <h1>Detalles de Puntos de Reciclaje</h1>
         <form action="{{route('editar_punto')}}" method="GET">
             <input type="hidden" name="id" value="{{$punto->id}}">
             <label for="">Tipo</label>
