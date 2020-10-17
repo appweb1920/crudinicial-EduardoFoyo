@@ -1,26 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <a href="{{route('home')}}">HOME</a>
-    <h1>Listado de Relaciones</h1>
-    <ul>
-        @foreach ($relacion as $r)
-        <li>
-            @foreach ($r->recolector as $recolector)
-                <span>{{$recolector->nombre}} - </span>
-            @endforeach
+@extends('layout')
 
-            @foreach ($r->punto as $punto)
-                <span>{{$punto->tipo}}</span>
-            @endforeach 
-        </li>
-        @endforeach
-    </ul>
-</body>
-</html>
+
+@section('content')
+<div class="container">
+    <h2 class="center-align">Listado de Relaciones</h2>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>NOMBRE</th>
+                    <th>TIPO</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($relacion as $r)
+                <tr>
+                    @foreach ($r->recolector as $recolector)
+                        <td>{{$recolector->nombre}}</td>
+                    @endforeach
+
+                    @foreach ($r->punto as $punto)
+                        <td>{{$punto->tipo}}</td>
+                    @endforeach 
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+
+@endpush

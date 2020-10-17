@@ -16,8 +16,10 @@ class DetalleRecolecto extends Migration
         
         Schema::create('detalle_recolecto', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_punto_reciclaje');
-            $table->foreignId('id_recolectores');
+            $table->unsignedBigInteger('id_punto_reciclaje');
+            $table->foreign('id_punto_reciclaje')->references('id')->on('punto_reciclaje');
+            $table->unsignedBigInteger('id_recolectores');
+            $table->foreign('id_recolectores')->references('id')->on('recolectores');
             $table->timestamps();
         });
     }

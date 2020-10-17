@@ -138,11 +138,15 @@ class ReciclajeController extends Controller
     
     public function creaRelacion(Request $request)
     {
-        $relacion = new DetalleRecolecto();
-        $relacion->id_punto_reciclaje = $request->punto_reciclaje;
-        $relacion->id_recolectores = $request->id;
-        $relacion->save();
-        return redirect()->route('lista_recolector_vista');
+        if($request->punto_reciclaje !== null){
+            $relacion = new DetalleRecolecto();
+            $relacion->id_punto_reciclaje = $request->punto_reciclaje;
+            $relacion->id_recolectores = $request->id;
+            $relacion->save();
+            return redirect()->route('lista_recolector_vista');
+        }else{
+            return back()->withInput();
+        }
     }
 
     public function listaRelaciones(Request $request)
@@ -150,5 +154,27 @@ class ReciclajeController extends Controller
         $relacion = DetalleRecolecto::with(['recolector','punto'])->get();
         
         return view('lista_relaciones')->with('relacion',$relacion);
+    }
+
+    public function eliminaPunto(Request $request,$id)
+    {
+        $recolector= PuntoReciclaje::where("id",$id)->first();
+        $d_r = DetalleRecolecto::where("id_punto_reciclaje",$id)->get();
+        $recolector->delete();
+        foreach ($d_r as $item) {
+            $item->delete();
+        }
+        return redirect()->route('lista_punto_vista');
+    }
+
+    public function eliminaRecolector(Request $request,$id)
+    {
+        $recolector= Recolectores::where("id",$id)->first();
+        $d_r = DetalleRecolecto::where("id_recolectores",$id)->get();
+        $recolector->delete();
+        foreach ($d_r as $item) {
+            $item->delete();
+        }
+        return redirect()->route('lista_recolector_vista');
     }
 }
