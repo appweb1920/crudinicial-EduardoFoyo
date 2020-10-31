@@ -8,7 +8,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    @if(Auth::user()->rol == 'admin')
+                        <th>ID</th>
+                    @endif
                     <th>NOMBRE</th>
                     <th>DIAS</th>
                 </tr>
@@ -16,7 +18,9 @@
             <tbody>
                 @foreach ($recolector as $p)
                 <tr>
-                    <td><a href="{{route('editar_recolector_vista',$p->id)}}">{{$p->id}}</a></td>
+                    @if(Auth::user()->rol == 'admin')
+                        <td><a href="{{route('editar_recolector_vista',$p->id)}}">{{$p->id}}</a></td>
+                    @endif
                     <td>{{$p->nombre}}</td>
                     <td>{{str_replace(',',' ',$p->dias_recoleccion)}}</td>
                 </tr>

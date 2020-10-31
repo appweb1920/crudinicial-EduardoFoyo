@@ -85,9 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{route('crear_punto_vista')}}">Agrega Punto</a>
                     <a href="{{route('lista_punto_vista')}}">Listado de Puntos</a>
-                    <a href="{{route('crear_recolector_vista')}}">Agrega Recolectores</a>
                     <a href="{{route('lista_recolector_vista')}}">Listado de Recolectores</a>
                     <a href="{{route('lista_relacion')}}">Listado de Relaciones</a>
                 </div>

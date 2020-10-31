@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\PuntoReciclaje;
 use App\Recolectores;
@@ -11,11 +12,15 @@ class ReciclajeController extends Controller
 {
     public function crearPuntoVista(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         return view('crear_punto_reciclaje');
     }
 
     public function crearPunto(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         $punto = new PuntoReciclaje();
         $punto->tipo = $request->tipo;
         $punto->direccion = $request->direccion;
@@ -33,6 +38,8 @@ class ReciclajeController extends Controller
 
     public function editarPuntoVista(Request $request,$id)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         if ($id) {
             $punto= PuntoReciclaje::where("id",$id)->first();
             return view('edicion_punto_reciclaje')->with('punto',$punto);
@@ -41,6 +48,8 @@ class ReciclajeController extends Controller
 
     public function editarPunto(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         $punto= PuntoReciclaje::where("id",$request->id)->first();
         $punto->tipo = $request->tipo;
         $punto->direccion = $request->direccion;
@@ -52,11 +61,15 @@ class ReciclajeController extends Controller
     
     public function crearRecolectorVista(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         return view('crear_recolectores');
     }
 
     public function crearRecolector(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         $dias = "";
         $recolector = new Recolectores();
         
@@ -96,6 +109,8 @@ class ReciclajeController extends Controller
 
     public function editarRecolectorVista(Request $request,$id)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         if ($id) {
             $recolector= Recolectores::where("id",$id)->first();
             $puntos = PuntoReciclaje::all();
@@ -105,6 +120,8 @@ class ReciclajeController extends Controller
 
     public function editarRecolector(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         $dias = "";
         $recolector= Recolectores::where("id",$request->id)->first();
         $recolector->nombre = $request->nombre;
@@ -138,6 +155,8 @@ class ReciclajeController extends Controller
     
     public function creaRelacion(Request $request)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         if($request->punto_reciclaje !== null){
             $relacion = new DetalleRecolecto();
             $relacion->id_punto_reciclaje = $request->punto_reciclaje;
@@ -158,6 +177,8 @@ class ReciclajeController extends Controller
 
     public function eliminaPunto(Request $request,$id)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         $recolector= PuntoReciclaje::where("id",$id)->first();
         $d_r = DetalleRecolecto::where("id_punto_reciclaje",$id)->get();
         $recolector->delete();
@@ -169,6 +190,8 @@ class ReciclajeController extends Controller
 
     public function eliminaRecolector(Request $request,$id)
     {
+        if (Auth::user()->rol !== "admin")
+            return view("welcome");
         $recolector= Recolectores::where("id",$id)->first();
         $d_r = DetalleRecolecto::where("id_recolectores",$id)->get();
         $recolector->delete();

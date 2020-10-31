@@ -8,7 +8,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    @if(Auth::user()->rol == 'admin')
+                        <th>ID</th>
+                    @endif
                     <th>TIPO</th>
                     <th>DIRECCION</th>
                     <th>HORA APERTURA</th>
@@ -18,7 +20,9 @@
             <tbody>
                 @foreach ($puntos as $p)
                 <tr>
-                    <td><a href="{{route('editar_punto_vista',$p->id)}}">{{$p->id}}</a></td>
+                    @if(Auth::user()->rol == 'admin')
+                        <td><a href="{{route('editar_punto_vista',$p->id)}}">{{$p->id}}</a></td>
+                    @endif
                     <td>{{$p->tipo}}</td>
                     <td>{{$p->direccion}}</td>
                     <td>{{$p->hora_apertura}}</td>

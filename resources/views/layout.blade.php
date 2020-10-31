@@ -17,9 +17,13 @@
         <div class="nav-wrapper 80cbc4 teal lighten-3">
             <a href="{{route('home')}}" id="" class="brand-logo right"><i class="material-icons">home</i></a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="{{route('crear_punto_vista')}}">Agrega Punto</a></li>
+                @if(Auth::user()->rol == 'admin')
+                    <li><a href="{{route('crear_punto_vista')}}">Agrega Punto</a></li>
+                @endif
                 <li><a href="{{route('lista_punto_vista')}}">Listado de Puntos</a></li>
-                <li><a href="{{route('crear_recolector_vista')}}">Agrega Recolectores</a></li>
+                @if(Auth::user()->rol == 'admin')
+                    <li><a href="{{route('crear_recolector_vista')}}">Agrega Recolectores</a></li>
+                @endif
                 <li><a href="{{route('lista_recolector_vista')}}">Listado de Recolectores</a></li>
                 <li><a href="{{route('lista_relacion')}}">Listado de Relaciones</a></li>
             </ul>
